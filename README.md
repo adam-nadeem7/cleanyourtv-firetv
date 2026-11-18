@@ -130,4 +130,4 @@ models and updates. Disable in small batches and check the TV between them.
   are trademarks of their owners; this project isn't affiliated with or endorsed by any of them, Amazon or Xiaomi.
 - Manrope: SIL Open Font License (`launcher/MANROPE-OFL.txt`).
 
-Licence: MIT (`LICENSE`).
+Licence: MIT (`LICENSE`); third-party parts keep their own licences (`NOTICE`).

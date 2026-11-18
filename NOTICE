@@ -1,0 +1,4 @@
+Third-party parts keep their own licences: see launcher/CLEANFRAME-LICENSE.txt (MIT),
+launcher/SIMPLE-ICONS-LICENSE.txt (CC0), launcher/CUSTOM-BRAND-ICONS-LICENSE.txt (MIT),
+launcher/MANROPE-OFL.txt (SIL OFL 1.1), and the Unsplash License for the bundled photos
+(launcher/app/src/main/assets/wallpapers/catalog.txt).
