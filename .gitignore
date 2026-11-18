@@ -1,0 +1,12 @@
+.venv/
+launcher/build/
+launcher/app/build/
+launcher/.gradle/
+launcher/local.properties
+# Your own wallpapers and film photos stay on your machine (set-wallpaper.sh / set-photos.sh push them).
+wallpaper.jpg
+photos/
+# Personal: TV dumps and screenshots contain device serials, account and network names.
+backup/
+shots/
+.DS_Store

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- CleanFrame-style Home: a photograph, the apps as a quiet list of names with monochrome marks,
+     one glass plate for focus, the time top right and four utilities bottom right. Positions follow
+     CleanFrame's 1920 x 1080 layout halved (the TV is 960 x 540 dp). -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#1D2A30">
+
+    <ImageView
+        android:id="@+id/wallpaper"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:importantForAccessibility="no" />
+
+    <!-- CleanFrame's photo dim (left to right) and lower scrim; strengths set per photo in code. -->
+    <View
+        android:id="@+id/dim"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <View
+        android:id="@+id/scrim"
+        android:layout_width="match_parent"
+        android:layout_height="240dp"
+        android:layout_gravity="bottom" />
+
+    <tv.clean.home.GlassPlate
+        android:id="@+id/plate"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:importantForAccessibility="no" />
+
+    <view
+        class="tv.clean.home.Scrollers$Vertical"
+        android:id="@+id/list_scroll"
+        android:layout_width="600dp"
+        android:layout_height="472dp"
+        android:layout_marginStart="@dimen/list_left"
+        android:layout_marginTop="@dimen/list_top"
+        android:fadingEdgeLength="82dp"
+        android:requiresFadingEdge="vertical">
+
+        <LinearLayout
+            android:id="@+id/column"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+    </view>
+
+    <TextClock
+        android:id="@+id/clock"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|top"
+        android:layout_marginTop="36dp"
+        android:layout_marginEnd="@dimen/util_right"
+        android:format12Hour="h:mm"
+        android:format24Hour="H:mm"
+        android:includeFontPadding="false"
+        android:letterSpacing="-0.03"
+        android:textColor="@color/ink"
+        android:textSize="24sp" />
+
+    <!-- Utilities: Wallpaper, Inputs, Fire TV UI, Settings. The focused one's name appears beside it. -->
+    <LinearLayout
+        android:id="@+id/utils"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_marginEnd="@dimen/util_right_cell"
+        android:layout_marginBottom="36dp"
+        android:orientation="vertical" />
+
+    <TextView
+        android:id="@+id/util_label"
+        android:layout_width="wrap_content"
+        android:layout_height="32dp"
+        android:layout_gravity="end|top"
+        android:alpha="0"
+        android:gravity="center_vertical"
+        android:includeFontPadding="false"
+        android:singleLine="true"
+        android:textColor="@color/ink"
+        android:textSize="14sp" />
+
+    <FrameLayout
+        android:id="@+id/sheet"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:alpha="0"
+        android:visibility="gone">
+
+        <tv.clean.home.GlassPlate
+            android:id="@+id/sheet_glass"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <LinearLayout
+            android:id="@+id/sheet_rows"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dp" />
+    </FrameLayout>
+</FrameLayout>

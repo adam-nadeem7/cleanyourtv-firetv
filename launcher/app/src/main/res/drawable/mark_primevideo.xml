@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- primevideo: from primevideo.svg (Simple Icons, CC0; Disney+ from Custom Brand Icons, MIT; via
+     CleanFrame), cropped to its ink. The mark is a trademark of its owner. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="103.24dp" android:height="24.0dp"
+    android:viewportWidth="12.552" android:viewportHeight="2.918">
+    <group android:translateX="-5.823" android:translateY="-12.767">
+        <path android:fillColor="#FFFFFFFF" android:pathData="M 16.007 13.175 c .405 -.306 .944 -.408 1.39 -.408 .418 0 .756 .09 .828 .185 .15 .2 -.039 1.584 -.775 2.244 -.112 .102 -.22 .047 -.17 -.087 .166 -.442 .536 -1.436 .36 -1.677 -.175 -.242 -1.158 -.115 -1.6 -.058 -.068 .008 -.107 -.02 -.112 -.061 v -.023 c .004 -.036 .03 -.078 .079 -.115 z M 5.823 13.003 a .105 .105 0 0 1 .106 -.091 c .027 0 .057 .009 .089 .028 a 11.778 11.778 0 0 0 6.194 1.772 c 1.52 0 3.19 -.34 4.726 -1.043 .232 -.105 .426 .164 .2 .346 -1.371 1.09 -3.359 1.67 -5.07 1.67 -2.397 0 -4.557 -.956 -6.191 -2.547 a .173 .173 0 0 1 -.054 -.097 Z" />
+    </group>
+</vector>

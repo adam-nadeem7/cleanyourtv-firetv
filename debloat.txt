@@ -1,0 +1,74 @@
+# Xiaomi L65MB-FAEU (Amazon AFTBR92D74, ginzaeu, MediaTek MT5873), Fire OS 8.1.8.5 / Android 11 (SDK 30)
+# Tested on that TV. Read it before running remove.sh: comment out (#) anything you use. Batch 4 is the
+# original owner's choice of unused apps and casting: edit it for yours.
+#
+# Never listed here: com.amazon.tv.launcher. It is protected on Fire OS 8 ("Cannot disable a protected
+# package") and stays as the system Home; the launcher in launcher/ covers it instead.
+#
+# Since 2026-11-18 everything is REMOVED FOR USER 0 (pm uninstall -k --user 0): Appstore auto-updates were
+# switching disabled packages back on (Luna, Music, Silk, News, ZDF came back that way). The system copy
+# stays on the TV, so it is reversible; packages Fire OS won't remove are disabled instead.
+# Apply:   ./remove.sh             (or ./remove.sh <batch number>)
+# Undo:    ./restore.sh            (reinstalls/re-enables every package in this file)
+# Comment out a line to keep that app.
+#
+# Kept on purpose: Alexa (vizzini, aria, alexa*), AirPlay, whisperplay/whisperlink (phone remote app),
+# OTA updates, Live TV + tuner (livetv, mediatek.*, vewd HbbTV, MHEG), HDMI/TIF inputs, keyboard (tv.ime),
+# remote/Bluetooth (bluetooth, blepa, fireinputdevices, autopairservice), Appstore (venezia),
+# Netflix, YouTube, Prime Video, Disney+, HBO Max, Apple TV, Spotify, NordVPN.
+
+## batch 1: telemetry and analytics
+com.miui.tv.analytics                    # Xiaomi analytics (Firebase)
+com.amazon.device.telemetry.emitter
+com.amazon.neo.minerva
+com.amazon.neo.minerva.logcat
+com.amazon.wirelessmetrics.service
+com.amazon.perfc
+com.amazon.perfcollection
+com.amazon.dp.logger
+com.amazon.ceviche                       # event-tracking pipeline
+com.amazon.device.metrics
+com.amazon.device.crashmanager
+com.amazon.device.logmanager
+com.fireos.usagestats.proxy
+
+## batch 2: ads, ACR and sponsored content
+com.amazon.tv.acr                        # automatic content recognition (fingerprints what is on screen)
+com.amazon.hybridadidservice             # advertising ID
+com.amazon.kso.blackbird                 # ad bidding / sponsored webviews
+com.amazon.ftvads.deeplinking
+com.amazon.shoptv.client                 # shopping
+com.amazon.tv.democontent.provider       # store demo content
+com.amazon.spiderpork                    # promo cards / "News" (metrics transport)
+com.amazon.sneakpeek                     # sponsored "Sneak Peek" previews
+com.amazon.hedwig                        # Fire TV Channels; since an update "Amazon Luna" (watch-time tracking)
+com.amazon.media.recommendations         # recommendation feeder
+com.amazon.naatyam
+
+## batch 3: tutorials and preloads
+com.amazon.storm.lightning.tutorial
+com.amazon.tmm.tutorial
+com.amazon.gamehub
+com.amazon.tahoe                         # Amazon Kids (Fire OS reinstalls it if removed: stays disabled)
+com.amazon.cloud9                        # Silk browser
+com.amazon.bueller.photos                # Amazon Photos
+com.amazon.minitv.android.app            # miniTV stub
+com.amazon.smarthomemapviewapp
+com.amazon.audiohome                     # Alexa Home Theater
+
+## batch 4: your choices (unused apps, casting you don't use)
+com.amazon.bueller.music                 # Amazon Music
+# com.plexapp.android                   # re-enabled 2026-10-19: wanted in the launcher
+com.zdf.android.mediathek
+de.prosiebensat1digital.seventv          # Joyn / 7TV
+com.amazon.cast.sink                     # Miracast screen mirroring
+com.amazon.dialservice                   # DIAL cast-from-phone-app receiver
+
+## batch 5: re-check 2026-11-18 (also from couch-tv's privacy list)
+com.amazon.privacypassservice            # ad token service
+com.amazon.wifilocker                    # uploads your saved Wi-Fi passwords to your Amazon account
+com.amazon.tv.developer.dataservice      # Content Personalization: apps report what you watch to Amazon
+com.amazon.tv.easyupgrade                # cloud backup of settings for moving to a new Fire TV
+com.amazon.adep                          # reports app installs and device events to Amazon
+com.amazon.ftv.screensaver               # Amazon screensaver (sponsored content); replaced by PhotoDream
+com.amazon.tv.earlyaccess                # "early access" promo stub

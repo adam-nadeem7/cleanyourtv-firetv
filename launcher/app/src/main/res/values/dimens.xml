@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- CleanFrame's 1920 x 1080 px layout halved: the TV is 960 x 540 dp at density 2.0. -->
+    <dimen name="list_left">56dp</dimen>       <!-- 112 px -->
+    <dimen name="list_top">36dp</dimen>        <!-- 72 px -->
+    <dimen name="row_h">58dp</dimen>           <!-- CleanFrame 128 px rows, 10% smaller -->
+    <dimen name="plate_h">60dp</dimen>
+    <dimen name="anchor">84dp</dimen>          <!-- focused row's place in the list, just past the fade -->
+    <dimen name="name_left">64dp</dimen>       <!-- 128 px -->
+    <dimen name="util_right">61dp</dimen>      <!-- 122 px -->
+    <dimen name="util_right_cell">53dp</dimen>
+</resources>

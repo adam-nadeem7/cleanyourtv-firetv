@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <uses-feature android:name="android.software.leanback" android:required="false" />
+    <uses-feature android:name="android.hardware.touchscreen" android:required="false" />
+
+    <!-- Read the channel list so "Live TV" can open a real channel; granted over adb. -->
+    <uses-permission android:name="android.permission.READ_TV_LISTINGS" />
+    <!-- Lets the app keep its own Home watch switched on and bound (WatchKeeper); granted over adb. -->
+    <uses-permission android:name="android.permission.WRITE_SECURE_SETTINGS" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <!-- (No INTERNET permission: the launcher never goes online.) -->
+
+    <!-- Android 11 package visibility: without this the app grid comes up empty. -->
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent>
+        <package android:name="com.amazon.tv.launcher" />
+        <package android:name="com.amazon.tv.livetv" />
+        <package android:name="com.amazon.tv.settings.v2" />
+        <package android:name="com.amazon.venezia" />
+    </queries>
+
+    <application
+        android:label="@string/app_name"
+        android:icon="@drawable/ic_launcher"
+        android:banner="@drawable/banner"
+        android:theme="@style/Theme.CleanHome"
+        android:allowBackup="false"
+        android:supportsRtl="false">
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:launchMode="singleTask"
+            android:stateNotNeeded="true"
+            android:excludeFromRecents="true"
+            android:screenOrientation="landscape"
+            android:configChanges="orientation|screenSize|keyboard|keyboardHidden|navigation|uiMode">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.HOME" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- Full-screen HDMI / AV through the TV input framework (Amazon's own switcher is signature-locked). -->
+        <activity
+            android:name=".InputPlayerActivity"
+            android:exported="false"
+            android:excludeFromRecents="true"
+            android:screenOrientation="landscape"
+            android:theme="@style/Theme.CleanHome.Player"
+            android:configChanges="orientation|screenSize|keyboard|keyboardHidden|navigation|uiMode" />
+
+        <!-- Puts the Home watch back after a reboot or an update (see WatchKeeper). -->
+        <receiver android:name=".WatchKeeper" android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+            </intent-filter>
+        </receiver>
+
+        <!-- The screensaver: your wallpaper gallery with a clock, instead of Amazon's. -->
+        <service
+            android:name=".PhotoDream"
+            android:label="@string/app_name"
+            android:exported="true"
+            android:permission="android.permission.BIND_DREAM_SERVICE">
+            <intent-filter>
+                <action android:name="android.service.dreams.DreamService" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </service>
+
+        <!-- Fire OS keeps com.amazon.tv.launcher as Home (protected). This service sends the Home button
+             here instead and covers the Amazon home screen whenever it comes up (e.g. after boot). -->
+        <service
+            android:name=".HomeKeyService"
+            android:label="@string/home_service_name"
+            android:exported="true"
+            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
+            <intent-filter>
+                <action android:name="android.accessibilityservice.AccessibilityService" />
+            </intent-filter>
+            <meta-data
+                android:name="android.accessibilityservice"
+                android:resource="@xml/home_key_service" />
+        </service>
+    </application>
+</manifest>

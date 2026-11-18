@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="ink">#F4F4F1</color>          <!-- CleanFrame's warm white -->
+    <color name="solid_ink">#141618</color>    <!-- text on a solid (focused) sheet row -->
+    <color name="window">#1D2A30</color>
+</resources>

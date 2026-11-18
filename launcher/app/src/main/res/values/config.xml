@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- The app list, top to bottom. The PS5 tile is always first; launchable apps that are not
+         listed here follow in alphabetical order. Override without rebuilding: ./set-order.sh (see README). -->
+    <string-array name="app_order">
+        <item>com.amazon.firetv.youtube</item>
+        <item>com.spotify.tv.android</item>
+        <item>com.apple.atve.amazon.appletv</item>
+        <item>com.hbo.hbonow</item>
+        <item>com.netflix.ninja</item>
+        <item>com.amazon.firebat</item>
+        <item>com.disney.disneyplus</item>
+        <item>com.plexapp.android</item>
+        <item>com.nordvpn.android</item>
+    </string-array>
+
+    <!-- Never shown as tiles: system plumbing that declares a launcher entry, and apps reachable
+         another way (Appstore: via the Fire TV UI entry). Prefix match. -->
+    <string-array name="hidden_prefixes">
+        <item>tv.clean.home</item>
+        <item>com.amazon.tv.launcher</item>
+        <item>com.amazon.tv.earlyaccess</item>
+        <item>com.amazon.tv.quicksettings.ui</item>
+        <item>com.amazon.tv.localgallery</item>
+        <item>com.amazon.venezia</item>
+        <item>com.amazon.ftv.profilepicker</item>
+        <item>com.amazon.ftv.screensaver</item>
+        <item>com.amazon.ssm</item>
+        <item>com.amazon.dummy.</item>
+        <item>com.apple.airplay.</item>
+        <item>com.android.documentsui</item>
+        <item>com.mediatek.</item>
+        <item>com.vewd.</item>
+        <!-- Amazon apps that updates keep pushing back (Luna, Music, Silk, News, Kids, games, miniTV):
+             never shown even if one comes back before remove.sh runs again. -->
+        <item>com.amazon.hedwig</item>
+        <item>com.amazon.spiderpork</item>
+        <item>com.amazon.cloud9</item>
+        <item>com.amazon.bueller.</item>
+        <item>com.amazon.tahoe</item>
+        <item>com.amazon.gamehub</item>
+        <item>com.amazon.luna</item>
+        <item>com.amazon.minitv</item>
+        <item>com.amazon.tv.localgallery</item>
+    </string-array>
+
+    <!-- The PlayStation 5: HDMI-CEC reports it on port 3, the TV input below. -->
+    <string name="ps5_input">com.mediatek.tis/.HdmiInputService/HW4</string>
+    <string name="ps5_port">HDMI 3</string>
+
+</resources>

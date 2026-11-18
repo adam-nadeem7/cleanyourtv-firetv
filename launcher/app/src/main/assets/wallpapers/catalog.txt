@@ -1,0 +1,16 @@
+# id|name|tone|frostVeil|credit|source  (Unsplash License; via CleanFrame, MIT)
+misty|Misty coast|light|0.2|Ganapathy Kumar|https://unsplash.com/photos/n4VMQZIkgDg
+cove|Quiet cove|light|0.12|Joshua Wordel|https://unsplash.com/photos/1L_5PT7EKzU
+forest|Forest mist|dark|0.12|Dejan Zakic|https://unsplash.com/photos/rr2EF3J5F2Y
+valley|Mountain valley|dark|0.12|Aniket Deole|https://unsplash.com/photos/M6XC789HLe8
+night|Desert stars|light|0.2|Mohammad Alizade|https://unsplash.com/photos/4wzRuAb-KWs
+peaks|Blue peaks|dark|0.36|John Rodenn Castillo|https://unsplash.com/photos/rQqWOHZ96OM
+bridge|Bridge at dusk|dark|0.44|Justin Wolff|https://unsplash.com/photos/pbp_Ww2cewA
+ridge|Sunlit ridges|dark|0.12|Cristina Gottardi|https://unsplash.com/photos/wndpWTiDuT0
+golden|Golden hour|dark|0.3|Karthik Sreenivas|https://unsplash.com/photos/tmtkhWbgMu8
+summit|Sunlit summits|dark|0.2|Rudra Gupta|https://unsplash.com/photos/PuTSzJJ-qyU
+goldcoast|Gold Coast dusk|light|0.2|City of Gold Coast|https://unsplash.com/photos/YiaGblobOGI
+sydney|Sydney Harbour|light|0.44|Caleb|https://unsplash.com/photos/JmuyB_LibRo
+amber|Amber hills|light|0.2|Chris Barbalis|https://unsplash.com/photos/vazZtmYFgFY
+mint|Mint wave|light|0.44|MagicPattern|https://unsplash.com/photos/87PP9Zd7MNo
+alpine|Alpine glow|light|0.2|Cristina Gottardi|https://unsplash.com/photos/CSpjU6hYo_0
