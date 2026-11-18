@@ -24,6 +24,11 @@ $TV sh "pm install -r /data/local/tmp/cleanhome.apk 2>&1; rm -f /data/local/tmp/
 $TV sh "pm grant $PKG android.permission.READ_TV_LISTINGS"
 # Lets the app keep its own Home watch on and bound after reboots and updates (WatchKeeper).
 $TV sh "pm grant $PKG android.permission.WRITE_SECURE_SETTINGS"
+# Settings > Screensaver after (a system setting) needs the WRITE_SETTINGS app-op.
+$TV sh "appops set $PKG WRITE_SETTINGS allow"
+# Lets the Home watch see a Home press while the Fire TV home is open on purpose (it reads the log
+# only during such a visit). Optional: without it, Home on the Fire TV home just does nothing.
+$TV sh "pm grant $PKG android.permission.READ_LOGS"
 
 # The screensaver: the wallpaper gallery with a clock (PhotoDream) instead of Amazon's sponsored one.
 $TV sh "settings put secure screensaver_components $PKG/$PKG.PhotoDream; settings put secure screensaver_enabled 1"

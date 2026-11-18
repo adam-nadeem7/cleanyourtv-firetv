@@ -40,7 +40,16 @@ final class Apps {
         }
     }
 
+    /** The apps on Home: everything launchable, minus what was hidden in Settings > Apps. */
     static List<Entry> load(Context ctx) {
+        List<Entry> out = loadAll(ctx);
+        java.util.Set<String> hidden = Prefs.hiddenApps(ctx);
+        out.removeIf(e -> hidden.contains(e.pkg));
+        return out;
+    }
+
+    /** Every launchable app (system plumbing left out), in the configured order. */
+    static List<Entry> loadAll(Context ctx) {
         PackageManager pm = ctx.getPackageManager();
         String[] hidden = ctx.getResources().getStringArray(R.array.hidden_prefixes);
         Map<String, Entry> all = new LinkedHashMap<>();
@@ -80,6 +89,16 @@ final class Apps {
 
     static File orderFile(Context ctx) {
         return new File(ctx.getFilesDir(), "order.txt");
+    }
+
+    /** Settings > Apps: write the whole order to files/order.txt (the same file set-order.sh pushes). */
+    static void saveOrder(Context ctx, List<String> pkgs) {
+        try (java.io.FileWriter w = new java.io.FileWriter(orderFile(ctx))) {
+            w.write("# Written by Settings > Apps on the TV\n");
+            for (String p : pkgs) w.write(p + "\n");
+        } catch (Exception ignored) {
+        }
+        Prefs.touchApps(ctx);
     }
 
     /** files/order.txt (one package per line) overrides the built-in order. */

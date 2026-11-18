@@ -78,9 +78,9 @@ public class MainActivity extends Activity {
     private final Handler main = new Handler(Looper.getMainLooper());
     private final ExecutorService io = Executors.newSingleThreadExecutor();
     private final Runnable hideLabel = () -> utilLabel.animate().alpha(0f).setDuration(160).start();
-    private static final long SHUFFLE_MS = 3 * 60 * 1000;
+    private long appsStampSeen = -1;
     private final java.util.Random random = new java.util.Random();
-    /** Every 3 minutes on screen: a random other photo. Paused while an app or input is open. */
+    /** Every few minutes on screen (Settings > Wallpaper > Shuffle): a random other photo. Paused while an app or input is open. */
     private final Runnable shuffle = new Runnable() {
         @Override public void run() {
             if (walls.size() > 1) {
@@ -89,9 +89,15 @@ public class MainActivity extends Activity {
                 Prefs.setWallpaper(MainActivity.this, walls.get(wallIdx).id);
                 showWallpaper(true);
             }
-            main.postDelayed(this, SHUFFLE_MS);
+            scheduleShuffle();
         }
     };
+
+    private void scheduleShuffle() {
+        main.removeCallbacks(shuffle);
+        int min = Prefs.shuffleMinutes(this);
+        if (min > 0) main.postDelayed(shuffle, min * 60_000L);
+    }
 
     @Override
     protected void onCreate(Bundle b) {
@@ -170,13 +176,20 @@ public class MainActivity extends Activity {
             wallIdx = 0;
             for (int i = 0; i < walls.size(); i++) if (walls.get(i).id.equals(want)) wallIdx = i;
             showWallpaper(false);
+        } else if (!walls.isEmpty() && !walls.get(wallIdx).id.equals(Prefs.wallpaper(this))) {
+            // Picked in Settings > Wallpaper.
+            String want = Prefs.wallpaper(this);
+            for (int i = 0; i < walls.size(); i++) if (walls.get(i).id.equals(want)) wallIdx = i;
+            showWallpaper(false);
         }
-        main.removeCallbacks(shuffle);
-        main.postDelayed(shuffle, SHUFFLE_MS);
-        long stamp = Apps.orderFile(this).lastModified();
-        if (appsDirty || stamp != orderStamp) {
+        scheduleShuffle();
+        Prefs.applyClock(this, (android.widget.TextClock) clock);
+        clock.setVisibility(Prefs.clockShown(this) ? View.VISIBLE : View.GONE);
+        long stamp = Apps.orderFile(this).lastModified(), aStamp = Prefs.appsStamp(this);
+        if (appsDirty || stamp != orderStamp || aStamp != appsStampSeen) {
             appsDirty = false;
             orderStamp = stamp;
+            appsStampSeen = aStamp;
             reloadApps();
         }
     }
@@ -448,8 +461,7 @@ public class MainActivity extends Activity {
                 Prefs.setWallpaper(this, walls.get(wallIdx).id);
                 showWallpaper(true);
                 showLabel(walls.get(wallIdx).name, false);
-                main.removeCallbacks(shuffle);
-                main.postDelayed(shuffle, SHUFFLE_MS);
+                scheduleShuffle();
                 break;
             case U_INPUTS: {
                 List<String> labels = new ArrayList<>();
@@ -475,7 +487,7 @@ public class MainActivity extends Activity {
                 break;
             }
             case U_SETTINGS:
-                openSettings();
+                open(new Intent(this, SettingsActivity.class));
                 break;
         }
     }
@@ -650,13 +662,6 @@ public class MainActivity extends Activity {
             startActivity(i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
         } catch (Exception ignored) {
         }
-    }
-
-    /** Fire OS's Settings grid; android.settings.SETTINGS only bounces through the Amazon home. */
-    private void openSettings() {
-        open(new Intent("amazon.intent.action.MAINSETTINGS")
-                .addCategory("android.intent.category.MAINSETTINGS")
-                .setClassName(Apps.AMAZON_HOME, Apps.AMAZON_HOME + ".ui.MainSettingsActivity"));
     }
 
     /** The original Fire TV home; let through until another app comes to the front (HomeKeyService). */

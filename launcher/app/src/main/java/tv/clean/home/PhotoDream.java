@@ -63,8 +63,7 @@ public class PhotoDream extends DreamService {
         root.addView(scrim, new FrameLayout.LayoutParams(-1, -1));
 
         TextClock clock = new TextClock(this);
-        clock.setFormat12Hour("h:mm");
-        clock.setFormat24Hour("H:mm");
+        Prefs.applyClock(this, clock);
         clock.setTextSize(30);
         clock.setTypeface(Fonts.get(this, 500));
         clock.setLetterSpacing(-0.03f);

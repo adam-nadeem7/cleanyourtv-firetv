@@ -9,6 +9,13 @@
     <!-- Lets the app keep its own Home watch switched on and bound (WatchKeeper); granted over adb. -->
     <uses-permission android:name="android.permission.WRITE_SECURE_SETTINGS" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <!-- Settings > Screensaver after (system screen_off_timeout); the app-op is allowed over adb. -->
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <!-- Settings > About shows the TV's IP address. -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!-- The Home watch reads the system log only while the Fire TV home is open on purpose, to see
+         a Home press there (Fire OS sends it no other signal); granted over adb. -->
+    <uses-permission android:name="android.permission.READ_LOGS" />
     <!-- (No INTERNET permission: the launcher never goes online.) -->
 
     <!-- Android 11 package visibility: without this the app grid comes up empty. -->
@@ -53,6 +60,14 @@
                 <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- The settings page (Settings icon on Home). -->
+        <activity
+            android:name=".SettingsActivity"
+            android:exported="false"
+            android:excludeFromRecents="true"
+            android:screenOrientation="landscape"
+            android:configChanges="orientation|screenSize|keyboard|keyboardHidden|navigation|uiMode" />
 
         <!-- Full-screen HDMI / AV through the TV input framework (Amazon's own switcher is signature-locked). -->
         <activity

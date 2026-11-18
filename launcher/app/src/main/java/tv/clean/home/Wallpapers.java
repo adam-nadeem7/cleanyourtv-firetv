@@ -86,6 +86,37 @@ final class Wallpapers {
         }
     }
 
+    /** A small preview for Settings > Wallpaper, about targetW pixels wide (never the full photo). */
+    static Bitmap thumb(Context c, W w, int targetW) {
+        BitmapFactory.Options o = new BitmapFactory.Options();
+        o.inPreferredConfig = Bitmap.Config.RGB_565;
+        try {
+            if (mine(w)) {
+                String path = OWN.equals(w.id) ? ownFile(c).getPath()
+                        : new File(new File(c.getFilesDir(), "photos"), w.id.substring(PHOTO.length()) + ".jpg").getPath();
+                o.inJustDecodeBounds = true;
+                BitmapFactory.decodeFile(path, o);
+                o.inSampleSize = sample(o.outWidth, targetW);
+                o.inJustDecodeBounds = false;
+                return BitmapFactory.decodeFile(path, o);
+            }
+            String asset = "wallpapers/" + w.id + ".jpg";
+            o.inJustDecodeBounds = true;
+            try (InputStream in = c.getAssets().open(asset)) { BitmapFactory.decodeStream(in, null, o); }
+            o.inSampleSize = sample(o.outWidth, targetW);
+            o.inJustDecodeBounds = false;
+            try (InputStream in = c.getAssets().open(asset)) { return BitmapFactory.decodeStream(in, null, o); }
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    private static int sample(int width, int target) {
+        int s = 1;
+        while (width / (s * 2) >= target) s *= 2;
+        return s;
+    }
+
     /**
      * The glass field: the photo centre-cropped to the screen's 16:9, halved repeatedly (each halving
      * averages 2x2 pixels) down to about 120 px wide, then box-blurred. Drawn back up with bilinear

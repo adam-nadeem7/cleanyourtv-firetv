@@ -22,11 +22,15 @@ Fire OS 8.1.8.5 = Android 11). Other Fire TV Edition TVs and sticks on Fire OS 8
   List layout: large names with monochrome service marks, a frosted plate that stays still while the list glides
   under it, the clock top right, and four controls bottom right: **Wallpaper**, **Inputs** (Live TV, HDMI, AV),
   **Fire TV UI** (the Appstore or Amazon's original home, when you need them) and **Settings**.
+- **A settings page** (after couch-tv's Home settings), with any remote: the wallpaper and how often it shuffles,
+  which apps show and in what order (hold OK to move one), a 24 or 12 hour clock, the screensaver and sleep
+  timers, ad-blocking DNS on or off, ADB debugging on or off, and shortcuts to the Fire OS screens an app may open
+  (Network, Bluetooth & remotes, Apps, Device & software, All settings).
 - **A console tile:** a little capybara that sleeps while the console on HDMI is in standby and runs when it is
   on (read from the TV input framework, no polling). OK switches to that input. While an HDMI input shows a
   picture, the TV's screensaver and auto-sleep stay off, and come back when the signal goes.
 - **Wallpapers:** 15 Unsplash photos bundled (via CleanFrame), plus your own (`set-wallpaper.sh`,
-  `set-photos.sh`). The home shuffles to another photo every 3 minutes.
+  `set-photos.sh`). The home shuffles to another photo every 3 minutes (or 10, 30, never: Settings > Wallpaper).
 - **A screensaver** that cross-fades through the same photos with a clock, instead of Amazon's, which carries
   sponsored content.
 - **The Home button** brings you back here, also after a reboot. The launcher keeps its Home watch on and bound by
@@ -44,9 +48,10 @@ Fire OS 8.1.8.5 = Android 11). Other Fire TV Edition TVs and sticks on Fire OS 8
 | Fire OS 8 limit | Here |
 |---|---|
 | `com.amazon.tv.launcher` is protected: it can't be disabled or replaced as Home | An accessibility service sees Amazon's home come to the front and puts this one over it (about 0.2 s, so you may see a flash) |
-| The Home key never reaches accessibility key filters; the "homekey" broadcast needs an Amazon signature | The window event is the signal. One gap: pressing Home *while on* Amazon's home (opened from Fire TV UI) does nothing; open any app or pick "Home" in its Your Apps row |
+| The Home key never reaches accessibility key filters; the "homekey" broadcast needs an Amazon signature | The window event is the signal. Pressing Home *while on* Amazon's home (opened from Fire TV UI) gives no window event and Fire OS's "Home pressed" broadcasts go only to Amazon apps, so during such a visit only, the watch reads the system log, where Fire OS notes each Home press (needs the `READ_LOGS` grant; without it, pick "Home" in the Your Apps row) |
 | Amazon's input switcher (`tvinput://tunenow`) needs an Amazon signature | HDMI and AV play in the launcher's own full-screen `TvView` |
 | Appstore updates switch disabled packages back on | `remove.sh` uninstalls them for the user (`pm uninstall -k --user 0`); factory-version packages refuse (`DELETE_FAILED_INTERNAL_ERROR`) and are disabled instead; the launcher hides the usual comeback apps |
+| Picture, Display & sound, Date & time, Language, Privacy and Accessibility need Amazon's own permission to open | The settings page links to what does open, and to All Fire TV settings for the rest |
 | Some telemetry packages are protected | AdGuard DNS blocks the metrics server they report to |
 | ADB debugging switches itself off at every reboot on this TV | Turn it back on when you want to run the scripts |
 
@@ -89,7 +94,9 @@ Android SDK command-line tools.
    brew install --cask android-commandlinetools     # once; or set sdk.dir in launcher/local.properties
    ./build-and-install.sh
    ```
-   It builds the APK, installs it with `pm install` (plain `adb install` can hang), grants its permissions,
+   It builds the APK, installs it with `pm install` (plain `adb install` can hang), grants its permissions
+   (`WRITE_SECURE_SETTINGS` and the `WRITE_SETTINGS` app-op for the settings page, `READ_LOGS` for Home on
+   Amazon's home, `READ_TV_LISTINGS` for Live TV),
    switches on the Home watch and the screensaver, and pushes your wallpapers if you have any.
 
 ## Make it yours
@@ -113,7 +120,8 @@ Simple Icons SVGs). Apps without a mark get a monogram.
 
 Amazon's screensaver after `restore.sh`:
 `.venv/bin/python tv.py sh "settings put secure screensaver_components com.amazon.ftv.screensaver/.app.services.ScreensaverService"`.
-Third-party apps removed in batch 4 come back from the Appstore. When you're done, switch ADB debugging off again.
+Third-party apps removed in batch 4 come back from the Appstore. When you're done, switch ADB debugging off again
+(the home's Settings > About > ADB debugging).
 
 **Use at your own risk.** Everything here is reversible and was lived with on one TV, but Fire OS differs between
 models and updates. Disable in small batches and check the TV between them.
@@ -124,7 +132,7 @@ models and updates. Disable in small batches and check the TV between them.
   Nathan Clark (MIT, `launcher/CLEANFRAME-LICENSE.txt`). Photos: Unsplash License, photographers listed in
   `launcher/app/src/main/assets/wallpapers/catalog.txt`.
 - The self-healing Home watch, boot catch and crash guard follow [couch-tv](https://github.com/Seagey/couch-tv)'s
-  FireWatch (MIT); its privacy list added the ad-token service.
+  FireWatch (MIT), and the settings page its Home settings; its privacy list added the ad-token service.
 - The debloat approach and example lists from [cleanyourtv](https://github.com/Gathin23/cleanyourtv).
 - Service marks: [Simple Icons](https://simpleicons.org) (CC0) and Custom Brand Icons (MIT, Disney+). The marks
   are trademarks of their owners; this project isn't affiliated with or endorsed by any of them, Amazon or Xiaomi.
